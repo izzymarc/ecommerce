@@ -1,0 +1,10 @@
+{
+  "name": "ecommerce-platform",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "install:all": "cd server && npm install && cd ../client && npm install",
+    "build": "cd client && npm install && npm run build",
+    "preview": "cd client && npm run preview"
+  }
+}

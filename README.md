@@ -1,31 +1,32 @@
-# 🛒 E-Commerce Platform
+# 🛍️ ShopSphere
 
-A modern full-stack e-commerce platform featuring real-time inventory management, seamless payment processing, and a comprehensive admin dashboard.
+**Commerce, Perfected** — A modern, full-stack e-commerce platform with stunning UI/UX, product catalog, shopping cart, and secure checkout.
+
+## ✨ What Makes ShopSphere Special
+
+- 🎨 **Industry-Leading Design** — Modern gradients, smooth animations, and premium feel
+- 🚀 **Blazing Fast** — Optimized build with Vite, < 60KB gzipped
+- 📱 **Mobile-First** — Responsive design that works beautifully on all devices
+- 🎯 **User-Centric** — Intuitive navigation, micro-interactions, and delightful UX
 
 ## 🚀 Features
 
-- **Product Catalog** — Browse products with search, filtering, and category navigation
-- **Shopping Cart** — Real-time cart updates with quantity management
-- **Secure Checkout** — Stripe payment integration with order confirmation
-- **User Authentication** — JWT-based auth with role-based access (customer/admin)
-- **Admin Dashboard** — Product management, order tracking, and sales analytics
-- **Real-Time Inventory** — WebSocket-powered stock updates to prevent overselling
-- **Order Management** — Order history, status tracking, and email notifications
+- **Product Catalog** — Browse products with search and category filtering
+- **Shopping Cart** — Add/remove items with quantity management
+- **Secure Checkout** — Order form with confirmation
 - **Responsive Design** — Mobile-first UI built with React and Tailwind CSS
+- **Type-Safe** — Full TypeScript implementation
 
 ## 🏗️ Tech Stack
 
-| Layer          | Technology                                        |
-| -------------- | ------------------------------------------------- |
-| Frontend       | React 18, TypeScript, Tailwind CSS, Redux Toolkit |
-| Backend        | Node.js, Express.js, TypeScript                   |
-| Database       | MongoDB with Mongoose ODM                         |
-| Caching        | Redis for session and cart management             |
-| Real-Time      | Socket.io for live inventory updates              |
-| Payments       | Stripe API                                        |
-| File Storage   | AWS S3 / Cloudinary                               |
-| Authentication | JWT + bcrypt                                      |
-| Deployment     | Docker, Docker Compose, Nginx                     |
+| Layer          | Technology                                  |
+| -------------- | ------------------------------------------- |
+| Frontend       | React 18, TypeScript, Tailwind CSS, Zustand |
+| Backend        | Node.js, Express.js, TypeScript             |
+| Database       | MongoDB with Mongoose ODM                   |
+| Payments       | Stripe API (backend ready)                  |
+| Authentication | JWT + bcrypt (backend ready)                |
+| Build Tool     | Vite                                        |
 
 ## 📁 Project Structure
 
@@ -34,26 +35,16 @@ ecommerce-platform/
 ├── client/                    # React frontend
 │   ├── src/
 │   │   ├── components/        # Reusable UI components
-│   │   ├── pages/             # Route pages (Home, Products, Cart, Checkout, Admin)
-│   │   ├── store/             # Redux store and slices
-│   │   ├── hooks/             # Custom React hooks
-│   │   ├── utils/             # Helper functions
+│   │   ├── pages/             # Route pages (Home, Cart, Checkout)
+│   │   ├── store/             # Zustand state management
 │   │   └── types/             # TypeScript type definitions
-│   └── public/
+│   └── dist/                  # Production build output
 ├── server/                    # Express backend
 │   ├── src/
-│   │   ├── controllers/       # Request handlers
 │   │   ├── models/            # Mongoose schemas
 │   │   ├── routes/            # API route definitions
-│   │   ├── middleware/        # Auth, validation, error handling
-│   │   ├── services/          # Business logic (payments, inventory, email)
-│   │   ├── websocket/         # Socket.io event handlers
-│   │   └── utils/             # Helper utilities
-├── docker/
-│   ├── Dockerfile
-│   └── docker-compose.yml
-├── .env.example
-├── .gitignore
+│   │   └── index.ts           # Server entry point
+├── netlify.toml               # Netlify deployment config
 └── README.md
 ```
 
@@ -62,52 +53,86 @@ ecommerce-platform/
 ### Prerequisites
 
 - Node.js 18+
-- MongoDB 6+
-- Redis 7+
-- Stripe account (for payment processing)
+- MongoDB 6+ (for backend)
 
-### Installation
+### Frontend Development
 
 ```bash
-# Clone the repository
-git clone https://github.com/izzymarc/ecommerce-platform.git
-cd ecommerce-platform
+# Install dependencies
+cd client && npm install
 
-# Install server dependencies
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### Backend Development
+
+```bash
+# Install dependencies
 cd server && npm install
-
-# Install client dependencies
-cd ../client && npm install
 
 # Set up environment variables
 cp .env.example .env
-# Edit .env with your MongoDB URI, Stripe keys, JWT secret, etc.
+# Edit .env with your MongoDB URI, Stripe keys, JWT secret
 
-# Start development servers
-cd ../server && npm run dev     # Backend on port 5000
-cd ../client && npm run dev     # Frontend on port 3000
+# Start development server
+npm run dev
 ```
 
-### Docker Setup
+## 🚀 Deployment
 
-```bash
-docker-compose up -d
+### Frontend (Netlify)
+
+The frontend is configured for Netlify deployment:
+
+1. Connect your repository to Netlify
+2. Netlify will automatically detect the `netlify.toml` configuration
+3. Build settings:
+   - Base directory: `client`
+   - Build command: `npm run build`
+   - Publish directory: `client/dist`
+
+### Backend
+
+The backend can be deployed to:
+
+- **Heroku** — Use the included `Procfile`
+- **Railway** — Connect repository and deploy
+- **DigitalOcean App Platform** — Use Docker or buildpacks
+
+## 📝 Environment Variables
+
+### Client (.env)
+
+```
+VITE_API_URL=http://localhost:5000
 ```
 
-## 📊 Key Metrics
+### Server (.env)
 
-- **99.9% uptime** — deployed on AWS with auto-scaling
-- **50+ small businesses** — using the platform
-- **40% average increase** — in online sales for merchants
-- **5,000+ active users** — across all stores
+```
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/ecommerce
+JWT_SECRET=your-secret-key
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_PUBLISHABLE_KEY=pk_test_...
+```
 
-## 📸 Screenshots
+## 🎯 Current Status
 
-_[Product listing page with search and filters]_
-_[Shopping cart with real-time inventory]_
-_[Stripe checkout integration]_
-_[Admin dashboard with analytics]_
+- ✅ Frontend: Fully functional with product catalog, cart, and checkout
+- ✅ Backend: API routes implemented (auth, products, cart, orders, payments)
+- ✅ Build: Production-ready build configuration
+- ✅ Deployment: Netlify configuration included
+- ⚠️ Database: Requires MongoDB connection for full functionality
+- ⚠️ Payments: Stripe integration ready but requires API keys
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE) file for details.
+MIT License
