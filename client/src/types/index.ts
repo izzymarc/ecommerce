@@ -27,6 +27,9 @@ export interface Product {
   originalPrice?: number
   image: string
   images: string[]
+  /** Unsplash photo IDs for real product photography. Falls back to `image` emoji when absent. */
+  photo?: string
+  photos?: string[]
   category: string
   subcategory?: string
   description: string
@@ -174,6 +177,10 @@ export interface Banner {
   cta: string
   ctaLink: string
   image: string
+  /** Unsplash photo ID for the hero background image. */
+  photo?: string
+  /** Short eyebrow label shown above the headline. */
+  eyebrow?: string
   bgGradient: string
   textColor: string
 }

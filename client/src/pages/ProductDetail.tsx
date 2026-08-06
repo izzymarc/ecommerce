@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { ProductImage } from '../components/ProductImage'
 import { useCartStore } from '../store/cartStore'
 import { PRODUCTS } from '../data/products'
 
@@ -72,10 +73,16 @@ export function ProductDetail() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Image Gallery */}
         <div>
-          <div className="h-96 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl flex items-center justify-center mb-4">
-            <span className="text-[10rem] transform hover:scale-105 transition-transform duration-300">
-              {product.images[selectedImage]}
-            </span>
+          <div className="h-96 overflow-hidden rounded-2xl bg-gradient-to-br from-gray-50 to-gray-100 mb-4">
+            <ProductImage
+              photo={product.photo}
+              emoji={product.images[selectedImage]}
+              alt={product.name}
+              preset="detail"
+              className="h-full w-full"
+              emojiClass="text-[10rem]"
+              priority
+            />
           </div>
           <div className="flex gap-3">
             {product.images.map((img, i) => (
@@ -276,8 +283,15 @@ export function ProductDetail() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {PRODUCTS.filter((p) => p.id !== product.id).slice(0, 4).map((related) => (
             <Link key={related.id} to={`/product/${related.slug}`} className="group bg-white rounded-2xl border border-gray-100 p-4 hover:shadow-lg transition-all">
-              <div className="h-32 flex items-center justify-center">
-                <span className="text-5xl group-hover:scale-110 transition-transform">{related.image}</span>
+              <div className="h-32 overflow-hidden rounded-xl">
+                <ProductImage
+                  photo={related.photo}
+                  emoji={related.image}
+                  alt={related.name}
+                  preset="card"
+                  className="h-full w-full transition-transform duration-500 group-hover:scale-105"
+                  emojiClass="text-5xl"
+                />
               </div>
               <h3 className="text-sm font-medium text-gray-800 mt-2 truncate">{related.name}</h3>
               <StarRating rating={related.rating} count={related.reviewCount} />

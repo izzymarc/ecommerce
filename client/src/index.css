@@ -3,3 +3,15 @@
 @tailwind utilities;
 
 body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+/* Carousel progress pip fills from the left edge */
+.animate-progress { transform-origin: left center; }
+
+/* Honour the OS reduced-motion setting for decorative animation */
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns,
+  .animate-progress,
+  .animate-shimmer {
+    animation: none !important;
+  }
+}

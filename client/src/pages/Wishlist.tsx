@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { ProductImage } from '../components/ProductImage'
 import { PRODUCTS } from '../data/products'
 import { useCartStore } from '../store/cartStore'
 
@@ -26,8 +27,15 @@ export function Wishlist() {
         {wishlist.map((product) => (
           <div key={product.id} className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all">
             <Link to={`/product/${product.slug}`}>
-              <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                <span className="text-6xl hover:scale-110 transition-transform">{product.image}</span>
+              <div className="h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                <ProductImage
+                  photo={product.photo}
+                  emoji={product.image}
+                  alt={product.name}
+                  preset="card"
+                  className="h-full w-full transition-transform duration-500 hover:scale-105"
+                  emojiClass="text-6xl"
+                />
               </div>
             </Link>
             <div className="p-4">

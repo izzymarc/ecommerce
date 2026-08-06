@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { ProductImage } from '../components/ProductImage'
 import { PRODUCTS, CATEGORIES } from '../data/products'
 import type { SortOption } from '../types'
 
@@ -101,9 +102,16 @@ export function Shop() {
                 const d = product.originalPrice ? Math.round((1 - product.price / product.originalPrice) * 100) : 0
                 return (
                   <Link key={product.id} to={`/product/${product.slug}`} className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all">
-                    <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center relative">
-                      <span className="text-6xl group-hover:scale-110 transition-transform">{product.image}</span>
-                      <div className="absolute top-3 left-3 flex gap-1">{d > 0 && <span className="bg-rose-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">-{d}%</span>}{product.bestseller && <span className="bg-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">Best</span>}</div>
+                    <div className="h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 relative">
+                      <ProductImage
+                        photo={product.photo}
+                        emoji={product.image}
+                        alt={product.name}
+                        preset="card"
+                        className="h-full w-full transition-transform duration-500 group-hover:scale-105"
+                        emojiClass="text-6xl"
+                      />
+                      <div className="absolute top-3 left-3 z-10 flex gap-1">{d > 0 && <span className="bg-rose-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">-{d}%</span>}{product.bestseller && <span className="bg-amber-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">Best</span>}</div>
                     </div>
                     <div className="p-4">
                       <p className="text-xs text-indigo-600 font-medium mb-1">{product.category}</p>

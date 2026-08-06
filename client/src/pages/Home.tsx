@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { useCartStore } from '../store/cartStore'
+import { HeroCarousel } from '../components/HeroCarousel'
+import { ProductImage } from '../components/ProductImage'
 import { PRODUCTS, CATEGORIES, BANNERS, FLASH_DEALS } from '../data/products'
 import type { Product } from '../types'
 
@@ -78,9 +80,16 @@ function ProductCard({ product }: { product: Product }) {
           </svg>
         </button>
 
-        {/* Product Image (emoji) */}
-        <div className="h-48 bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center group-hover:from-indigo-50 group-hover:to-purple-50 transition-colors duration-300">
-          <span className="text-6xl transform group-hover:scale-110 transition-transform duration-300">{product.image}</span>
+        {/* Product photograph, with emoji fallback */}
+        <div className="h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+          <ProductImage
+            photo={product.photo}
+            emoji={product.image}
+            alt={product.name}
+            preset="card"
+            className="h-full w-full transition-transform duration-500 group-hover:scale-105"
+            emojiClass="text-6xl"
+          />
         </div>
       </Link>
 
@@ -135,75 +144,13 @@ function ProductCard({ product }: { product: Product }) {
 }
 
 export function Home() {
-  const [currentBanner, setCurrentBanner] = useState(0)
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentBanner((prev) => (prev + 1) % BANNERS.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [])
-
   const bestsellers = PRODUCTS.filter((p) => p.bestseller)
   const newArrivals = PRODUCTS.filter((p) => p.newArrival)
   const trending = PRODUCTS.sort((a, b) => b.reviewCount - a.reviewCount).slice(0, 4)
 
   return (
     <div>
-      {/* ============ Hero Carousel ============ */}
-      <section className="relative overflow-hidden">
-        <div className="flex transition-transform duration-700 ease-out" style={{ transform: `translateX(-${currentBanner * 100}%)` }}>
-          {BANNERS.map((banner) => (
-            <div
-              key={banner.id}
-              className={`w-full shrink-0 bg-gradient-to-r ${banner.bgGradient} ${banner.textColor}`}
-            >
-              <div className="container mx-auto px-4 py-16 lg:py-24">
-                <div className="flex items-center gap-8">
-                  <div className="flex-1">
-                    <span className="text-7xl">{banner.image}</span>
-                    <h1 className="text-4xl lg:text-5xl font-extrabold mt-4 leading-tight">{banner.title}</h1>
-                    <p className="text-lg mt-3 opacity-90">{banner.subtitle}</p>
-                    <Link
-                      to={banner.ctaLink}
-                      className="inline-block mt-6 px-8 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-xl font-semibold hover:bg-white/30 transition-all text-white"
-                    >
-                      {banner.cta}
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Carousel Indicators */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-          {BANNERS.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentBanner(i)}
-              className={`w-2.5 h-2.5 rounded-full transition-all ${
-                i === currentBanner ? 'bg-white w-8' : 'bg-white/50'
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* Arrow Controls */}
-        <button
-          onClick={() => setCurrentBanner((prev) => (prev - 1 + BANNERS.length) % BANNERS.length)}
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all"
-        >
-          ‹
-        </button>
-        <button
-          onClick={() => setCurrentBanner((prev) => (prev + 1) % BANNERS.length)}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all"
-        >
-          ›
-        </button>
-      </section>
+      <HeroCarousel banners={BANNERS} />
 
       {/* ============ Flash Deals ============ */}
       <section className="container mx-auto px-4 -mt-6 relative z-10">
@@ -340,8 +287,15 @@ export function Home() {
             {newArrivals.map((product) => (
               <div key={product.id} className="bg-white rounded-2xl p-4 group hover:shadow-xl transition-all">
                 <Link to={`/product/${product.slug}`}>
-                  <div className="h-36 flex items-center justify-center">
-                    <span className="text-5xl transform group-hover:scale-110 transition-transform">{product.image}</span>
+                  <div className="h-36 overflow-hidden rounded-xl">
+                    <ProductImage
+                      photo={product.photo}
+                      emoji={product.image}
+                      alt={product.name}
+                      preset="card"
+                      className="h-full w-full transition-transform duration-500 group-hover:scale-105"
+                      emojiClass="text-5xl"
+                    />
                   </div>
                   <h3 className="font-semibold text-gray-800 text-sm line-clamp-2 mt-2">{product.name}</h3>
                 </Link>
