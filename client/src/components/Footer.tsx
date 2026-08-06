@@ -72,13 +72,23 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-          <p>© 2026 ShopSphere. All rights reserved.</p>
+          <p>© 2026 ShopSphere — a portfolio demo, not a real store.</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
             <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
           </div>
-          <p>🔒 Secure payments with SSL encryption</p>
+          <p>
+            Built by{' '}
+            <a
+              href="https://ezekielgwamna.pages.dev/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-white underline transition-colors"
+            >
+              Ezekiel Funom Gwamna
+            </a>
+          </p>
         </div>
       </div>
     </footer>

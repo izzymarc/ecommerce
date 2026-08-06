@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
+import { DemoBanner } from './components/DemoBanner'
 import { Home } from './pages/Home'
 import { Shop } from './pages/Shop'
 import { ProductDetail } from './pages/ProductDetail'
@@ -14,6 +15,7 @@ export default function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50 flex flex-col">
+        <DemoBanner />
         <Navbar />
         <main className="flex-1">
           <Routes>
